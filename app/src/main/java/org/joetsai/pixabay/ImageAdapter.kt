@@ -19,7 +19,7 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return 10
+        return 50
     }
 
 
