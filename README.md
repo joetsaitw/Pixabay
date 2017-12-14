@@ -9,5 +9,6 @@
 
 ## 參考資料
 [MaterialDesign学习篇(五)，使用SearchView的正确姿势](https://juejin.im/entry/5989084ff265da3e1e5bec57)
+
 [Android RecyclerView Tutorial with Kotlin](https://www.raywenderlich.com/170075/android-recyclerview-tutorial-kotlin)
 
