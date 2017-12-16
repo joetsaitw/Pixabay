@@ -12,3 +12,6 @@
 
 [Android RecyclerView Tutorial with Kotlin](https://www.raywenderlich.com/170075/android-recyclerview-tutorial-kotlin)
 
+[在安卓APP中使用Glide編寫圖片相冊](https://code.tutsplus.com/zh-hant/tutorials/code-an-image-gallery-android-app-with-glide--cms-28207)
+
+
