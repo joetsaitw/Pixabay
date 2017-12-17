@@ -14,4 +14,7 @@
 
 [在安卓APP中使用Glide編寫圖片相冊](https://code.tutsplus.com/zh-hant/tutorials/code-an-image-gallery-android-app-with-glide--cms-28207)
 
+[How to remove all !! from your Kotlin code](https://android.jlelse.eu/how-to-remove-all-from-your-kotlin-code-87dc2c9767fb)
+
+
 
