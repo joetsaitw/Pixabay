@@ -17,4 +17,5 @@
 [How to remove all !! from your Kotlin code](https://android.jlelse.eu/how-to-remove-all-from-your-kotlin-code-87dc2c9767fb)
 
 
+[Put an indeterminate progressbar as footer in a RecyclerView grid](https://stackoverflow.com/questions/27044449/put-an-indeterminate-progressbar-as-footer-in-a-recyclerview-grid)
 
