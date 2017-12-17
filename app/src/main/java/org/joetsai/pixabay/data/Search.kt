@@ -1,4 +1,4 @@
-package org.joetsai.pixabay
+package org.joetsai.pixabay.data
 
 /**
  * Created by Joe on 2017/12/9.
@@ -8,11 +8,11 @@ package org.joetsai.pixabay
 
 data class SearchImgResponse(
 		val totalHits: Int, //500
-		val hits: List<Hit>,
+		val hits: List<Image>,
 		val total: Int //39850
 )
 
-data class Hit(
+data class Image(
 		val previewHeight: Int, //99
 		val likes: Int, //98
 		val favorites: Int, //80

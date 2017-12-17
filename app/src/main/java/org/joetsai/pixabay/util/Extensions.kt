@@ -1,4 +1,4 @@
-package org.joetsai.pixabay
+package org.joetsai.pixabay.util
 
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater

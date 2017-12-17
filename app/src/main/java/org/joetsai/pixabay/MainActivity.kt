@@ -6,41 +6,33 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import kotlinx.android.synthetic.main.activity_main.*
-import org.joetsai.pixabay.network.PixabayApiService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.joetsai.pixabay.Constants.Companion.GRID_SPAN_COUNT
+import org.joetsai.pixabay.data.Image
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SearchContract.View {
+
+    private val adapter by lazy {
+        ImageAdapter(onLoadMoreListener = {
+            println("Load More")
+        })
+    }
+
+    val presenter: SearchContract.Presenter by lazy {
+        SearchPresenter(this, SearchModel())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         setSupportActionBar(toolbar)
 
 
-        recyclerView.layoutManager = GridLayoutManager(this, 3)
-        recyclerView.adapter = ImageAdapter()
+        recyclerView.layoutManager = GridLayoutManager(this, GRID_SPAN_COUNT)
+        recyclerView.adapter = adapter
 
-
-        val apiService = ServiceGenerator.createService(PixabayApiService::class.java)
-
-        val call = apiService.searchImages(query = "yellow")
-
-        call.enqueue(object : Callback<SearchImgResponse>{
-            override fun onResponse(call: Call<SearchImgResponse>?, response: Response<SearchImgResponse>) {
-                if (response.isSuccessful) {
-                    println(response.body())
-                }
-            }
-
-            override fun onFailure(call: Call<SearchImgResponse>?, t: Throwable?) {
-
-            }
-        })
+        presenter.onLoadNextPage()
 
     }
 
@@ -51,6 +43,16 @@ class MainActivity : AppCompatActivity() {
         //找到searchView
         val searchItem = menu?.findItem(R.id.action_search)
         val searchView = searchItem?.actionView as SearchView
+
+        searchView.queryHint = "請輸入想要搜尋的圖片"
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun showList(hits: List<Image>) {
+        adapter.addImages(hits)
+    }
+
+    override fun showErrorView() {
+
     }
 }
