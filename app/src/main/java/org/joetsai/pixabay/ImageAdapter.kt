@@ -7,23 +7,23 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.footer_progressbar.view.*
 import kotlinx.android.synthetic.main.item_image.view.*
-import org.joetsai.pixabay.Constants.Companion.GRID_SPAN_COUNT
+import org.joetsai.pixabay.Constants.GRID_SPAN_COUNT
 import org.joetsai.pixabay.data.Image
 import org.joetsai.pixabay.util.inflate
 
-/**
- * Created by Joe on 2017/12/10.
- */
 
 class ImageAdapter(private val onLoadMoreListener: () -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
 
     // 正在讀取中
     private var isLoading = false
 
-    //private var lastPos
+    // 還有下頁資料
+    private var hasNextPage = true
 
-    //
+
+    private var test: (Boolean) -> Boolean = { isEnabled -> isEnabled }
+
+
     private var images = ArrayList<Image>()
 
     companion object {
@@ -48,6 +48,10 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
+
+//        if(holder is ImageViewHolder) {
+//
+//        }
         when (holder) {
             is ImageViewHolder -> {
                 holder.bind(images[position])
@@ -65,7 +69,6 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit) : RecyclerView.Ad
         val layoutManager = recyclerView?.layoutManager
 
         if (layoutManager is GridLayoutManager) {
-
             // 限制 Progressbar's size = 3, Image's size = 1
             layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
@@ -87,19 +90,14 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit) : RecyclerView.Ad
                     println("last index:" + layoutManager.findLastVisibleItemPosition())
                     println("itemCount = $itemCount")
 
-                    val isEnd = layoutManager.findLastVisibleItemPosition() == itemCount - 1
+                    val isEnd = layoutManager.findLastVisibleItemPosition() == (itemCount - 1)
 
-                    if (!isLoading && isEnd) {
-                        //notifyItemInserted(itemCount)
-                        //images.add(null)
-                        isLoading = true
+                    if (!isLoading && isEnd && hasNextPage) {
                         onLoadMoreListener()
                     }
                 }
             })
         }
-
-
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -110,6 +108,10 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit) : RecyclerView.Ad
         }
     }
 
+    /**
+     * isLoading = true 的時候
+     * 多加一個 item 給 ProgressBar使用
+     */
     override fun getItemCount(): Int {
         return if (isLoading) {
             images.size + 1
@@ -119,13 +121,27 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit) : RecyclerView.Ad
     }
 
     fun replaceImages(hits: List<Image>) {
+        hasNextPage = true
         images.clear()
         images.addAll(hits)
+        notifyDataSetChanged()
     }
 
     fun addImages(hits: List<Image>) {
         images.addAll(hits)
-        notifyDataSetChanged()
+        notifyItemInserted(images.size)
+    }
+
+    /**
+     * 不需要加載更多了
+     */
+    fun noMorePages() {
+        hasNextPage = false
+        notifyItemRemoved(images.size)
+    }
+
+    fun enableProgressBar(isEnabled: Boolean) {
+        this.isLoading = isEnabled
     }
 
 

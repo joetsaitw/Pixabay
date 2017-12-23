@@ -1,5 +1,7 @@
 package org.joetsai.pixabay.util
 
+import android.app.AlertDialog
+import android.content.Context
 import android.support.annotation.LayoutRes
 import android.view.LayoutInflater
 import android.view.View
@@ -12,3 +14,9 @@ import android.view.ViewGroup
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
+
+
+inline fun Context.alert(func: AlertDialog.Builder.() -> AlertDialog.Builder) {
+    AlertDialog.Builder(this).func().show()
+}
+

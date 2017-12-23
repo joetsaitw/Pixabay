@@ -12,24 +12,12 @@ import retrofit2.Response
 
 class SearchModel : SearchContract.Model {
 
-    override fun searchApi(callback: SearchContract.Model.Test, onSuccess: (List<Image>) -> Unit, onError: () -> Unit) {
+
+    override fun searchApi(query: String, page: Int, callback: ApiCallback<SearchImgResponse>) {
         val apiService = ServiceGenerator.createService(PixabayApiService::class.java)
-        val call = apiService.searchImages(query = "yellow")
 
-        call.enqueue(object : Callback<SearchImgResponse> {
-            override fun onResponse(call: Call<SearchImgResponse>?, response: Response<SearchImgResponse>) {
-                if (response.isSuccessful) {
-                    response.body()?.let { onSuccess(it.hits) }
-                } else {
-                    onError()
-                }
-            }
-
-            override fun onFailure(call: Call<SearchImgResponse>?, t: Throwable?) {
-                // 網路錯誤
-                onError()
-            }
-        })
+        val call = apiService.searchImages(query = query, page = page)
+        call.enqueue(callback)
 
     }
 

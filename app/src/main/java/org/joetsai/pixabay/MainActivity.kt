@@ -6,34 +6,32 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import kotlinx.android.synthetic.main.activity_main.*
-import org.joetsai.pixabay.Constants.Companion.GRID_SPAN_COUNT
+import org.joetsai.pixabay.Constants.GRID_SPAN_COUNT
 import org.joetsai.pixabay.data.Image
+import org.joetsai.pixabay.util.alert
 
 
 class MainActivity : AppCompatActivity(), SearchContract.View {
 
-    private val adapter by lazy {
-        ImageAdapter(onLoadMoreListener = {
-            println("Load More")
-        })
-    }
 
-    val presenter: SearchContract.Presenter by lazy {
+    private val presenter: SearchContract.Presenter by lazy {
         SearchPresenter(this, SearchModel())
     }
+
+    private val adapter by lazy {
+        ImageAdapter(onLoadMoreListener = { presenter.onLoadNextPage() })
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setSupportActionBar(toolbar)
 
+        //swipeRefreshLayout.setOnRefreshListener { presenter.onQueryTextSubmit() }
 
         recyclerView.layoutManager = GridLayoutManager(this, GRID_SPAN_COUNT)
         recyclerView.adapter = adapter
-
-        presenter.onLoadNextPage()
-
     }
 
 
@@ -43,16 +41,60 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
         //找到searchView
         val searchItem = menu?.findItem(R.id.action_search)
         val searchView = searchItem?.actionView as SearchView
-
         searchView.queryHint = "請輸入想要搜尋的圖片"
+
+
+
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                presenter.onQueryTextSubmit(query)
+                //presenter.onSearchSubmit(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return true
+            }
+        })
         return super.onCreateOptionsMenu(menu)
     }
 
-    override fun showList(hits: List<Image>) {
+
+    override fun addList(hits: List<Image>) {
         adapter.addImages(hits)
     }
 
-    override fun showErrorView() {
+    override fun showList(hits: List<Image>) {
+        adapter.replaceImages(hits)
+    }
 
+    override fun showErrorView(msg: String) {
+        alert {
+            setTitle("發生錯誤")
+            setMessage(msg)
+            setPositiveButton("確定") { _, _ -> }
+        }
+    }
+
+    override fun showNetWorkErrorView(msg: String) {
+        alert {
+            setTitle("發生錯誤")
+            setMessage(msg)
+            setPositiveButton("重試") { _, _ -> }
+            setNegativeButton("取消", null)
+        }
+    }
+
+    override fun showReloadingIndicator(active: Boolean) {
+//        swipeRefreshLayout.post { swipeRefreshLayout.isRefreshing = active }
+    }
+
+    override fun enableProgressBar(isEnabled: Boolean) {
+        adapter.enableProgressBar(isEnabled)
+    }
+
+    override fun stopLoadingMore() {
+        adapter.noMorePages()
     }
 }
