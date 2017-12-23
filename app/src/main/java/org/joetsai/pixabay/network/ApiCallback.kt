@@ -1,4 +1,4 @@
-package org.joetsai.pixabay
+package org.joetsai.pixabay.network
 
 import retrofit2.Call
 import retrofit2.Callback

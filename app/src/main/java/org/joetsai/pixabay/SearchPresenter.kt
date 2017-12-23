@@ -1,6 +1,7 @@
 package org.joetsai.pixabay
 
 import org.joetsai.pixabay.data.SearchImgResponse
+import org.joetsai.pixabay.network.ApiCallback
 
 
 class SearchPresenter(private val view: SearchContract.View, private val model: SearchContract.Model) : SearchContract.Presenter {

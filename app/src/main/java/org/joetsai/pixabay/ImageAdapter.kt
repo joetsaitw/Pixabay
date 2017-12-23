@@ -12,7 +12,8 @@ import org.joetsai.pixabay.data.Image
 import org.joetsai.pixabay.util.inflate
 
 
-class ImageAdapter(private val onLoadMoreListener: () -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ImageAdapter(private val onLoadMoreListener: () -> Unit,
+                   private val onItemClickedListener: (image: Image) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     // 正在讀取中
     private var isLoading = false
@@ -52,14 +53,19 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit) : RecyclerView.Ad
 //        if(holder is ImageViewHolder) {
 //
 //        }
+
+
         when (holder) {
             is ImageViewHolder -> {
                 holder.bind(images[position])
+
             }
             is ProgressbarViewHolder -> {
 
             }
         }
+
+        holder?.itemView?.setOnClickListener { onItemClickedListener(images[position]) }
 
     }
 
@@ -128,8 +134,9 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit) : RecyclerView.Ad
     }
 
     fun addImages(hits: List<Image>) {
+        val positionStart = images.size
         images.addAll(hits)
-        notifyItemInserted(images.size)
+        notifyItemRangeInserted(positionStart, hits.size)
     }
 
     /**
@@ -142,6 +149,8 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit) : RecyclerView.Ad
 
     fun enableProgressBar(isEnabled: Boolean) {
         this.isLoading = isEnabled
+        notifyItemChanged(images.size)
+        println("size:" + images.size)
     }
 
 
@@ -156,6 +165,9 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit) : RecyclerView.Ad
                     //.centerCrop()
                     //.placeholder(ColorDrawable(ContextCompat.getColor(itemView.context, R.color.colorPrimary))))
                     .into(imageView)
+
+            //itemView.setOnClickListener { onItemClickedListener(adapterPosition) }
+
         }
     }
 

@@ -1,5 +1,6 @@
 package org.joetsai.pixabay
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
@@ -7,6 +8,7 @@ import android.support.v7.widget.SearchView
 import android.view.Menu
 import kotlinx.android.synthetic.main.activity_main.*
 import org.joetsai.pixabay.Constants.GRID_SPAN_COUNT
+import org.joetsai.pixabay.ImageActivity.Companion.EXTRA_IMAGE
 import org.joetsai.pixabay.data.Image
 import org.joetsai.pixabay.util.alert
 
@@ -19,7 +21,14 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
     }
 
     private val adapter by lazy {
-        ImageAdapter(onLoadMoreListener = { presenter.onLoadNextPage() })
+        ImageAdapter(onLoadMoreListener = { presenter.onLoadNextPage() },
+                onItemClickedListener = { image ->
+                    //Toast.makeText(this, "pos:" + position, Toast.LENGTH_SHORT).show()
+
+                    val showImageIntent = Intent(this, ImageActivity::class.java)
+                    showImageIntent.putExtra(EXTRA_IMAGE, image)
+                    startActivity(showImageIntent)
+                })
     }
 
 
@@ -62,11 +71,11 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
 
 
     override fun addList(hits: List<Image>) {
-        adapter.addImages(hits)
+        recyclerView.post { adapter.addImages(hits) }
     }
 
     override fun showList(hits: List<Image>) {
-        adapter.replaceImages(hits)
+        recyclerView.post { adapter.replaceImages(hits) }
     }
 
     override fun showErrorView(msg: String) {
@@ -91,10 +100,14 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
     }
 
     override fun enableProgressBar(isEnabled: Boolean) {
-        adapter.enableProgressBar(isEnabled)
+        recyclerView.post { adapter.enableProgressBar(isEnabled) }
     }
 
     override fun stopLoadingMore() {
-        adapter.noMorePages()
+        recyclerView.post { adapter.noMorePages() }
+    }
+
+    override fun showNoResultsView() {
+
     }
 }

@@ -1,13 +1,9 @@
 package org.joetsai.pixabay
 
-import org.joetsai.pixabay.data.Image
 import org.joetsai.pixabay.data.SearchImgResponse
+import org.joetsai.pixabay.network.ApiCallback
 import org.joetsai.pixabay.network.PixabayApiService
 import org.joetsai.pixabay.network.ServiceGenerator
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
 
 
 class SearchModel : SearchContract.Model {

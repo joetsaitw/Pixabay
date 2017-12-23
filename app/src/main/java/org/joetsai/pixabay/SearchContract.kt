@@ -2,6 +2,7 @@ package org.joetsai.pixabay
 
 import org.joetsai.pixabay.data.Image
 import org.joetsai.pixabay.data.SearchImgResponse
+import org.joetsai.pixabay.network.ApiCallback
 
 
 interface SearchContract {
@@ -11,6 +12,8 @@ interface SearchContract {
         fun addList(hits: List<Image>)
         fun showErrorView(msg: String)
         fun showNetWorkErrorView(msg: String)
+
+        fun showNoResultsView()
 
         // Swipe Refresh Layout
         fun showReloadingIndicator(active: Boolean)
