@@ -8,14 +8,23 @@
 * [Glide](https://github.com/bumptech/glide/)
 
 ## 參考資料
-[MaterialDesign学习篇(五)，使用SearchView的正确姿势](https://juejin.im/entry/5989084ff265da3e1e5bec57)
 
+### Kotlin
 [Android RecyclerView Tutorial with Kotlin](https://www.raywenderlich.com/170075/android-recyclerview-tutorial-kotlin)
-
-[在安卓APP中使用Glide編寫圖片相冊](https://code.tutsplus.com/zh-hant/tutorials/code-an-image-gallery-android-app-with-glide--cms-28207)
 
 [How to remove all !! from your Kotlin code](https://android.jlelse.eu/how-to-remove-all-from-your-kotlin-code-87dc2c9767fb)
 
 
+### 影像
+[Android ImageView 的 scaleType 属性图解](https://juejin.im/entry/58dcdd2761ff4b0061564623)
+
+[在安卓APP中使用Glide編寫圖片相冊](https://code.tutsplus.com/zh-hant/tutorials/code-an-image-gallery-android-app-with-glide--cms-28207)
+
+
+### UI 元件
+
+[MaterialDesign学习篇(五)，使用SearchView的正确姿势](https://juejin.im/entry/5989084ff265da3e1e5bec57)
+
 [Put an indeterminate progressbar as footer in a RecyclerView grid](https://stackoverflow.com/questions/27044449/put-an-indeterminate-progressbar-as-footer-in-a-recyclerview-grid)
+
 
