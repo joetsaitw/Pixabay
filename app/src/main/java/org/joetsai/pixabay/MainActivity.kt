@@ -9,6 +9,7 @@ import android.view.Menu
 import kotlinx.android.synthetic.main.activity_main.*
 import org.joetsai.pixabay.Constants.GRID_SPAN_COUNT
 import org.joetsai.pixabay.ImageActivity.Companion.EXTRA_IMAGE
+import org.joetsai.pixabay.ImageActivity.Companion.EXTRA_PAGE
 import org.joetsai.pixabay.data.Image
 import org.joetsai.pixabay.util.alert
 
@@ -22,11 +23,12 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
 
     private val adapter by lazy {
         ImageAdapter(onLoadMoreListener = { presenter.onLoadNextPage() },
-                onItemClickedListener = { image ->
+                onItemClickedListener = { position, imageList ->
                     //Toast.makeText(this, "pos:" + position, Toast.LENGTH_SHORT).show()
 
                     val showImageIntent = Intent(this, ImageActivity::class.java)
-                    showImageIntent.putExtra(EXTRA_IMAGE, image)
+                    showImageIntent.putExtra(EXTRA_PAGE, position)
+                    showImageIntent.putExtra(EXTRA_IMAGE, imageList)
                     startActivity(showImageIntent)
                 })
     }
@@ -50,14 +52,20 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
         //找到searchView
         val searchItem = menu?.findItem(R.id.action_search)
         val searchView = searchItem?.actionView as SearchView
-        searchView.queryHint = "請輸入想要搜尋的圖片"
-
+        searchView.queryHint = "搜尋圖片"
+        searchView.maxWidth = Integer.MAX_VALUE
+//        searchView.isIconified = false
+//        searchView.onActionViewExpanded()
+//        searchView.onActionViewCollapsed()
+//        searchView.setIconifiedByDefault(false)
+        searchView.clearFocus()
 
 
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 presenter.onQueryTextSubmit(query)
+                searchView.clearFocus() // Close the keyboard
                 //presenter.onSearchSubmit(query)
                 return true
             }

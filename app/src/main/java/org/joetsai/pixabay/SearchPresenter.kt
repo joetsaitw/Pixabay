@@ -36,7 +36,13 @@ class SearchPresenter(private val view: SearchContract.View, private val model: 
 
             model.searchApi(query = query, page = INIT_PAGE, callback = object : ApiCallback<SearchImgResponse> {
                 override fun onSuccess(response: SearchImgResponse) {
-                    view.showList(response.hits)
+                    if (response.hits.isNotEmpty()) {
+                        view.showList(response.hits)
+                    } else {
+                        view.showErrorView("找不到查詢項目")
+                        view.stopLoadingMore()
+                    }
+
 //                    view.showReloadingIndicator(false)
 
                     view.enableProgressBar(false)

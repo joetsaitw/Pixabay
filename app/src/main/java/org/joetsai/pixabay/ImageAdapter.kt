@@ -13,7 +13,7 @@ import org.joetsai.pixabay.util.inflate
 
 
 class ImageAdapter(private val onLoadMoreListener: () -> Unit,
-                   private val onItemClickedListener: (image: Image) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+                   private val onItemClickedListener: (position: Int, imageList: ArrayList<Image>) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     // 正在讀取中
     private var isLoading = false
@@ -25,14 +25,14 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit,
     private var test: (Boolean) -> Boolean = { isEnabled -> isEnabled }
 
 
-    private var images = ArrayList<Image>()
+    private var imageList = ArrayList<Image>()
 
     companion object {
         val TYPE_IMAGE = 0
         val TYPE_PROGRESSBAR = 1
     }
 
-//    var images = mutableListOf<Image>()
+//    var imageList = mutableListOf<Image>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): RecyclerView.ViewHolder {
@@ -57,7 +57,7 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit,
 
         when (holder) {
             is ImageViewHolder -> {
-                holder.bind(images[position])
+                holder.bind(imageList[position])
 
             }
             is ProgressbarViewHolder -> {
@@ -65,7 +65,7 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit,
             }
         }
 
-        holder?.itemView?.setOnClickListener { onItemClickedListener(images[position]) }
+        holder?.itemView?.setOnClickListener { onItemClickedListener(position, imageList) }
 
     }
 
@@ -107,7 +107,7 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit,
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (isLoading && position == images.size) {
+        return if (isLoading && position == imageList.size) {
             TYPE_PROGRESSBAR
         } else {
             TYPE_IMAGE
@@ -120,22 +120,22 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit,
      */
     override fun getItemCount(): Int {
         return if (isLoading) {
-            images.size + 1
+            imageList.size + 1
         } else {
-            images.size
+            imageList.size
         }
     }
 
     fun replaceImages(hits: List<Image>) {
         hasNextPage = true
-        images.clear()
-        images.addAll(hits)
+        imageList.clear()
+        imageList.addAll(hits)
         notifyDataSetChanged()
     }
 
     fun addImages(hits: List<Image>) {
-        val positionStart = images.size
-        images.addAll(hits)
+        val positionStart = imageList.size
+        imageList.addAll(hits)
         notifyItemRangeInserted(positionStart, hits.size)
     }
 
@@ -144,13 +144,16 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit,
      */
     fun noMorePages() {
         hasNextPage = false
-        notifyItemRemoved(images.size)
+        notifyItemRemoved(imageList.size)
     }
 
     fun enableProgressBar(isEnabled: Boolean) {
         this.isLoading = isEnabled
-        notifyItemChanged(images.size)
-        println("size:" + images.size)
+//        val position = if (isEnabled) imageList.size else imageList.size -1
+//        notifyItemChanged(position)
+
+        notifyItemChanged(imageList.size)
+        println("enableProgressBar size:" + imageList.size)
     }
 
 

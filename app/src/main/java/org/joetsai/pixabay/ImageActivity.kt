@@ -2,9 +2,9 @@ package org.joetsai.pixabay
 
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_image.*
 import org.joetsai.pixabay.data.Image
 
@@ -20,7 +20,7 @@ class ImageActivity : AppCompatActivity() {
         // Note that some of these constants are new as of API 16 (Jelly Bean)
         // and API 19 (KitKat). It is safe to use them, as they are inlined
         // at compile-time and do nothing on earlier devices.
-        fullscreen_content.systemUiVisibility =
+        viewPager.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LOW_PROFILE or
                         View.SYSTEM_UI_FLAG_FULLSCREEN or
                         View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
@@ -47,8 +47,12 @@ class ImageActivity : AppCompatActivity() {
         false
     }
 
-    private val image: Image by lazy {
-        intent.getSerializableExtra(EXTRA_IMAGE) as Image
+    private val imageList: ArrayList<Image> by lazy {
+        intent.getSerializableExtra(EXTRA_IMAGE) as ArrayList<Image>
+    }
+
+    private val page: Int by lazy {
+        intent.getIntExtra(EXTRA_PAGE, 0)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +64,7 @@ class ImageActivity : AppCompatActivity() {
         mVisible = true
 
         // Set up the user interaction to manually show or hide the system UI.
-        fullscreen_content.setOnClickListener { toggle() }
+//        fullscreen_content.setOnClickListener { toggle() }
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
@@ -68,13 +72,19 @@ class ImageActivity : AppCompatActivity() {
         dummy_button.setOnTouchListener(mDelayHideTouchListener)
 
 
+        viewPager.adapter = ImageSliderAdapter(this, imageList, onClickListener = { toggle() })
+        viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageSelected(position: Int) {
+                textPosition.text = getString(R.string.image_position, position+1, imageList.size)
+            }
+        })
+        viewPager.currentItem = page
 
-        Glide.with(this)
-                .load(image.webformatURL)
-                // .apply(RequestOptions()
-                //.centerCrop()
-                //.placeholder(ColorDrawable(ContextCompat.getColor(itemView.context, R.color.colorPrimary))))
-                .into(imageView)
+
+
+
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -107,7 +117,7 @@ class ImageActivity : AppCompatActivity() {
 
     private fun show() {
         // Show the system bar
-        fullscreen_content.systemUiVisibility =
+        viewPager.systemUiVisibility =
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                         View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         mVisible = true
@@ -146,8 +156,9 @@ class ImageActivity : AppCompatActivity() {
         private val UI_ANIMATION_DELAY = 300
 
 
-
         val EXTRA_IMAGE = "EXTRA_IMAGE"
+
+        val EXTRA_PAGE = "EXTRA_PAGE"
 
     }
 }
