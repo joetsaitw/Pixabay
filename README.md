@@ -30,5 +30,10 @@
 [COLOR TOOL](https://material.io/color/#!/)
 
 
+[onPageSelected isn't triggered when calling setCurrentItem(0)](https://stackoverflow.com/questions/11794269/onpageselected-isnt-triggered-when-calling-setcurrentitem0/20292064#20292064)
+
+
+
+
 
 
