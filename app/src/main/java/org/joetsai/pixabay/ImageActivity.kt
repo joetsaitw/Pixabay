@@ -31,7 +31,8 @@ class ImageActivity : AppCompatActivity() {
     private val mShowPart2Runnable = Runnable {
         // Delayed display of UI elements
         supportActionBar?.show()
-        fullscreen_content_controls.visibility = View.VISIBLE
+//        fullscreen_content_controls.visibility = View.VISIBLE
+        frameLayoutOverlay.visibility = View.VISIBLE
     }
     private var mVisible: Boolean = false
     private val mHideRunnable = Runnable { hide() }
@@ -55,6 +56,8 @@ class ImageActivity : AppCompatActivity() {
         intent.getIntExtra(EXTRA_PAGE, 0)
     }
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -69,7 +72,7 @@ class ImageActivity : AppCompatActivity() {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        dummy_button.setOnTouchListener(mDelayHideTouchListener)
+//        dummy_button.setOnTouchListener(mDelayHideTouchListener)
 
 
         viewPager.adapter = ImageSliderAdapter(this, imageList, onClickListener = { toggle() })
@@ -77,14 +80,22 @@ class ImageActivity : AppCompatActivity() {
             override fun onPageScrollStateChanged(state: Int) {}
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
             override fun onPageSelected(position: Int) {
-                textPosition.text = getString(R.string.image_position, position+1, imageList.size)
+                setPageDetail(position)
             }
         })
+
+        // Init user's selected page,
+        // First page won't trigger OnPageChangeListener, so do it manually.
         viewPager.currentItem = page
+        if (page == 0) { setPageDetail(0) }
 
+    }
 
-
-
+    private fun setPageDetail(position: Int) {
+        textPosition.text = getString(R.string.image_position, position + 1, imageList.size)
+        textViews.text = imageList[position].views.toString()
+        textLikes.text = imageList[position].likes.toString()
+        textComments.text = imageList[position].comments.toString()
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -107,7 +118,8 @@ class ImageActivity : AppCompatActivity() {
     private fun hide() {
         // Hide UI first
         supportActionBar?.hide()
-        fullscreen_content_controls.visibility = View.GONE
+        //fullscreen_content_controls.visibility = View.GONE
+        frameLayoutOverlay.visibility = View.GONE
         mVisible = false
 
         // Schedule a runnable to remove the status and navigation bar after a delay

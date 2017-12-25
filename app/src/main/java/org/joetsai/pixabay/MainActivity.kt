@@ -24,8 +24,6 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
     private val adapter by lazy {
         ImageAdapter(onLoadMoreListener = { presenter.onLoadNextPage() },
                 onItemClickedListener = { position, imageList ->
-                    //Toast.makeText(this, "pos:" + position, Toast.LENGTH_SHORT).show()
-
                     val showImageIntent = Intent(this, ImageActivity::class.java)
                     showImageIntent.putExtra(EXTRA_PAGE, position)
                     showImageIntent.putExtra(EXTRA_IMAGE, imageList)
@@ -103,9 +101,6 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
         }
     }
 
-    override fun showReloadingIndicator(active: Boolean) {
-//        swipeRefreshLayout.post { swipeRefreshLayout.isRefreshing = active }
-    }
 
     override fun enableProgressBar(isEnabled: Boolean) {
         recyclerView.post { adapter.enableProgressBar(isEnabled) }

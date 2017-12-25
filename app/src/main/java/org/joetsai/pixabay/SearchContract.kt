@@ -15,9 +15,6 @@ interface SearchContract {
 
         fun showNoResultsView()
 
-        // Swipe Refresh Layout
-        fun showReloadingIndicator(active: Boolean)
-
         // Row ProgressBar
         fun enableProgressBar(isEnabled: Boolean)
 

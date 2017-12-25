@@ -42,9 +42,6 @@ class SearchPresenter(private val view: SearchContract.View, private val model: 
                         view.showErrorView("找不到查詢項目")
                         view.stopLoadingMore()
                     }
-
-//                    view.showReloadingIndicator(false)
-
                     view.enableProgressBar(false)
                 }
 
@@ -52,17 +49,18 @@ class SearchPresenter(private val view: SearchContract.View, private val model: 
                     if (statusCode == 400 && errorMsg.contains("\"page\" is out of valid range.")) {
                         view.showErrorView(errorMsg)
                     }
-                    view.showReloadingIndicator(false)
+                    view.enableProgressBar(false)
                 }
 
                 override fun onNetworkError(errorMsg: String) {
                     view.showNetWorkErrorView(errorMsg)
-                    view.showReloadingIndicator(false)
+                    view.stopLoadingMore()
+                    view.enableProgressBar(false)
                 }
 
                 override fun onUnexpectedError(errorMsg: String) {
                     view.showErrorView(errorMsg)
-                    view.showReloadingIndicator(false)
+                    view.enableProgressBar(false)
                 }
             })
         }

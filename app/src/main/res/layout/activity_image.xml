@@ -31,6 +31,7 @@
     <!-- This FrameLayout insets its children based on system windows using
          android:fitsSystemWindows. -->
     <FrameLayout
+        android:id="@+id/frameLayoutOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
@@ -38,32 +39,62 @@
         <TextView
             android:id="@+id/textPosition"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:background="@color/black_overlay"
             android:gravity="center"
-            tools:text="1/200"
             android:textColor="@android:color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="1/200" />
 
 
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"
             style="?metaButtonBarStyle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center_horizontal"
             android:layout_gravity="bottom|center_horizontal"
             android:background="@color/black_overlay"
             android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             tools:ignore="UselessParent">
 
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
+
+            <TextView
+                android:id="@+id/textViews"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:textColor="@android:color/white"
+                android:drawableStart="@drawable/ic_visibility"
+                android:gravity="center_vertical"
+                android:drawablePadding="10dp"
+                tools:text="123456"/>
+
+            <TextView
+                android:id="@+id/textLikes"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:textColor="@android:color/white"
+                android:drawableStart="@drawable/ic_favorite"
+                android:gravity="center_vertical"
+                android:drawablePadding="10dp"
+                tools:text="123456"/>
+
+
+            <TextView
+                android:id="@+id/textComments"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/dummy_button" />
+                android:textColor="@android:color/white"
+                android:drawableStart="@drawable/ic_comment"
+                android:gravity="center_vertical"
+                android:drawablePadding="10dp"
+                tools:text="1234"/>
 
         </LinearLayout>
     </FrameLayout>

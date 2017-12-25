@@ -6,14 +6,19 @@ import okhttp3.logging.HttpLoggingInterceptor.Level
 import org.joetsai.pixabay.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 object ServiceGenerator {
 
     private val BASE_URL = "https://pixabay.com/api/"
 
 
+    // todo no network detection
+
     private val client = OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply { level = if (BuildConfig.DEBUG) Level.BODY else Level.NONE})
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(10, TimeUnit.SECONDS)
+            .addInterceptor(HttpLoggingInterceptor().apply { level = if (BuildConfig.DEBUG) Level.BODY else Level.NONE })
             .build()
 
     private val retrofit = Retrofit.Builder()
