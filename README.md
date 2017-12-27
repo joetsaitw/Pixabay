@@ -9,9 +9,6 @@
 * [COLOR TOOL](https://material.io/color/#!/)
 * [MATERIAL ICONS](https://material.io/icons/)
 
-## 尚未完成功能
-
-[Dragging and Scaling](https://developer.android.com/training/gestures/scale.html)
 
 ## 參考資料
 
@@ -23,6 +20,12 @@
 [ContextExtensions](https://github.com/yodle/android-kotlin-demo/blob/c030f517847f4beaf5bdb0c35b40d72ae6908289/app/src/main/kotlin/com/yodle/android/kotlindemo/extension/ContextExtensions.kt)
 
 [Keddit — Part 4: RecyclerView — Delegate Adapters & Data Classes with Kotlin](https://android.jlelse.eu/keddit-part-4-recyclerview-delegate-adapters-data-classes-with-kotlin-9248f44327f7)
+
+
+[Kotlin 写 Android 单元测试（一），单元测试是什么以及为什么需要](http://johnnyshieh.me/posts/unit-test-what-and-why-in-kotlin/)
+
+[Befriending Kotlin and Mockito](https://medium.com/@elye.project/befriending-kotlin-and-mockito-1c2e7b0ef791)
+
 
 
 
@@ -42,6 +45,12 @@
 
 
 
+## 尚未完成功能
+
+[Dragging and Scaling](https://developer.android.com/training/gestures/scale.html): 圖片縮放功能
+
+
+[Spek](http://spekframework.org/): A Kotlin Specification Framework for the JVM
 
 
 
