@@ -1,4 +1,4 @@
-package org.joetsai.pixabay
+package org.joetsai.pixabay.image
 
 import android.content.Context
 import android.support.v4.view.PagerAdapter
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.pager_image.view.*
+import org.joetsai.pixabay.R
 import org.joetsai.pixabay.data.Image
 import org.joetsai.pixabay.util.inflate
 
@@ -33,9 +34,6 @@ class ImageSliderAdapter(private val context: Context,
 
         Glide.with(context)
                 .load(images[position].webformatURL)
-                // .apply(RequestOptions()
-                //.centerCrop()
-                //.placeholder(ColorDrawable(ContextCompat.getColor(itemView.context, R.color.colorPrimary))))
                 .into(imageView)
 
         container.addView(itemView)

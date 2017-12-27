@@ -12,12 +12,6 @@ import java.io.IOException
  */
 interface ApiCallback<T> : Callback<T> {
 
-
-//    companion object {
-//        val GSON = Gson() // Make it static
-//    }
-
-
     override fun onResponse(call: Call<T>?, response: Response<T>?) {
         if (response != null) {
             if (response.isSuccessful) {

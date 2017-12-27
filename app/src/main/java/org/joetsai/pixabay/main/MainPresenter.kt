@@ -1,10 +1,10 @@
-package org.joetsai.pixabay
+package org.joetsai.pixabay.main
 
 import org.joetsai.pixabay.data.SearchImgResponse
 import org.joetsai.pixabay.network.ApiCallback
 
 
-class SearchPresenter(private val view: SearchContract.View, private val model: SearchContract.Model) : SearchContract.Presenter {
+class MainPresenter(private val view: MainContract.View, private val model: MainContract.Model) : MainContract.Presenter {
 
 
     companion object {
@@ -23,37 +23,33 @@ class SearchPresenter(private val view: SearchContract.View, private val model: 
      * @param query 要搜尋的圖片名稱
      */
     override fun onQueryTextSubmit(query: String?) {
-
         if (query != null && query.isNotBlank()) {
-
-            println("query:" + query)
 
             this.page = INIT_PAGE
             this.query = query
 
-//            view.showReloadingIndicator(true)
+            view.clearList()
             view.enableProgressBar(true)
 
             model.searchApi(query = query, page = INIT_PAGE, callback = object : ApiCallback<SearchImgResponse> {
                 override fun onSuccess(response: SearchImgResponse) {
+                    view.enableProgressBar(false)
                     if (response.hits.isNotEmpty()) {
+                        page++
                         view.showList(response.hits)
                     } else {
-                        view.showErrorView("找不到查詢項目")
+                        view.showNoResultsFoundView()
                         view.stopLoadingMore()
                     }
-                    view.enableProgressBar(false)
                 }
 
                 override fun onError(statusCode: Int, errorMsg: String) {
-                    if (statusCode == 400 && errorMsg.contains("\"page\" is out of valid range.")) {
-                        view.showErrorView(errorMsg)
-                    }
+                    view.showErrorView(errorMsg)
                     view.enableProgressBar(false)
                 }
 
                 override fun onNetworkError(errorMsg: String) {
-                    view.showNetWorkErrorView(errorMsg)
+                    view.showNetWorkErrorView(false, errorMsg)
                     view.stopLoadingMore()
                     view.enableProgressBar(false)
                 }
@@ -67,25 +63,28 @@ class SearchPresenter(private val view: SearchContract.View, private val model: 
     }
 
     override fun onLoadNextPage() {
-        page++
 
         view.enableProgressBar(true)
 
         model.searchApi(query = query, page = page, callback = object : ApiCallback<SearchImgResponse> {
             override fun onSuccess(response: SearchImgResponse) {
-                view.addList(response.hits)
+                page++
                 view.enableProgressBar(false)
+                view.addList(response.hits)
             }
 
             override fun onError(statusCode: Int, errorMsg: String) {
+                // 此次搜尋結果已到底了
                 if (statusCode == 400 && errorMsg.contains("\"page\" is out of valid range.")) {
                     view.stopLoadingMore()
+                } else {
+                    view.showErrorView(errorMsg)
                 }
                 view.enableProgressBar(false)
             }
 
             override fun onNetworkError(errorMsg: String) {
-                view.showNetWorkErrorView(errorMsg)
+                view.showNetWorkErrorView(true, errorMsg)
                 view.enableProgressBar(false)
             }
 

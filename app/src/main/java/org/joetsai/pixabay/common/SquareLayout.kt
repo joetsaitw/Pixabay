@@ -1,11 +1,11 @@
-package org.joetsai.pixabay
+package org.joetsai.pixabay.common
 
 import android.content.Context
 import android.support.constraint.ConstraintLayout
 import android.util.AttributeSet
 
 /**
- * Created by Joe on 2017/12/17.
+ * 正方形的Layout
  */
 
 class SquareLayout @JvmOverloads constructor(

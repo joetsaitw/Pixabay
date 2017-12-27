@@ -1,5 +1,7 @@
 package org.joetsai.pixabay.data
 
+import org.joetsai.pixabay.common.Constants.ADAPTER_IMAGE
+import org.joetsai.pixabay.main.adapter.ViewType
 import java.io.Serializable
 
 /**
@@ -34,4 +36,8 @@ data class Image(
         val id: Int, //2985569
         val userImageURL: String, //https://cdn.pixabay.com/user/2017/11/29/19-47-26-843_250x250.jpg
         val imageHeight: Int //3264
-) : Serializable
+) : Serializable, ViewType {
+    override fun getViewType(): Int {
+        return ADAPTER_IMAGE
+    }
+}

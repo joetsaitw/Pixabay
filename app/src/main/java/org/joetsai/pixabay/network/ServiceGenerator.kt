@@ -12,9 +12,6 @@ object ServiceGenerator {
 
     private val BASE_URL = "https://pixabay.com/api/"
 
-
-    // todo no network detection
-
     private val client = OkHttpClient.Builder()
             .connectTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)

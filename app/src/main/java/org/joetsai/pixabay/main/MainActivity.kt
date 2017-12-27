@@ -1,32 +1,36 @@
-package org.joetsai.pixabay
+package org.joetsai.pixabay.main
 
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.SearchView
-import android.view.Menu
 import kotlinx.android.synthetic.main.activity_main.*
-import org.joetsai.pixabay.Constants.GRID_SPAN_COUNT
-import org.joetsai.pixabay.ImageActivity.Companion.EXTRA_IMAGE
-import org.joetsai.pixabay.ImageActivity.Companion.EXTRA_PAGE
+import org.joetsai.pixabay.R
+import org.joetsai.pixabay.common.Constants.GRID_SPAN_COUNT
 import org.joetsai.pixabay.data.Image
+import org.joetsai.pixabay.image.ImageActivity
+import org.joetsai.pixabay.image.ImageActivity.Companion.ARG_IMAGE_LIST
+import org.joetsai.pixabay.image.ImageActivity.Companion.ARG_PAGE
+import org.joetsai.pixabay.main.adapter.ImageAdapter
 import org.joetsai.pixabay.util.alert
+import org.joetsai.pixabay.util.gone
+import org.joetsai.pixabay.util.visible
+import java.io.Serializable
 
 
-class MainActivity : AppCompatActivity(), SearchContract.View {
+class MainActivity : AppCompatActivity(), MainContract.View {
 
-
-    private val presenter: SearchContract.Presenter by lazy {
-        SearchPresenter(this, SearchModel())
+    private val presenter: MainContract.Presenter by lazy {
+        MainPresenter(this, MainModel())
     }
 
     private val adapter by lazy {
         ImageAdapter(onLoadMoreListener = { presenter.onLoadNextPage() },
-                onItemClickedListener = { position, imageList ->
+                onImageClickedListener = { position, imageList ->
                     val showImageIntent = Intent(this, ImageActivity::class.java)
-                    showImageIntent.putExtra(EXTRA_PAGE, position)
-                    showImageIntent.putExtra(EXTRA_IMAGE, imageList)
+                    showImageIntent.putExtra(ARG_PAGE, position)
+                    showImageIntent.putExtra(ARG_IMAGE_LIST, imageList as Serializable)
                     startActivity(showImageIntent)
                 })
     }
@@ -37,34 +41,17 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        //swipeRefreshLayout.setOnRefreshListener { presenter.onQueryTextSubmit() }
-
+        // Init RecyclerView
         recyclerView.layoutManager = GridLayoutManager(this, GRID_SPAN_COUNT)
         recyclerView.adapter = adapter
-    }
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_search_view, menu)
-
-        //找到searchView
-        val searchItem = menu?.findItem(R.id.action_search)
-        val searchView = searchItem?.actionView as SearchView
-        searchView.queryHint = "搜尋圖片"
+        // Init SearchView
         searchView.maxWidth = Integer.MAX_VALUE
-//        searchView.isIconified = false
-//        searchView.onActionViewExpanded()
-//        searchView.onActionViewCollapsed()
-//        searchView.setIconifiedByDefault(false)
-        searchView.clearFocus()
-
-
-
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 presenter.onQueryTextSubmit(query)
                 searchView.clearFocus() // Close the keyboard
-                //presenter.onSearchSubmit(query)
                 return true
             }
 
@@ -72,9 +59,7 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
                 return true
             }
         })
-        return super.onCreateOptionsMenu(menu)
     }
-
 
     override fun addList(hits: List<Image>) {
         recyclerView.post { adapter.addImages(hits) }
@@ -82,6 +67,12 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
 
     override fun showList(hits: List<Image>) {
         recyclerView.post { adapter.replaceImages(hits) }
+    }
+
+    override fun clearList() {
+        recyclerView.visible()
+        errorView.gone()
+        adapter.clearImages()
     }
 
     override fun showErrorView(msg: String) {
@@ -92,11 +83,17 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
         }
     }
 
-    override fun showNetWorkErrorView(msg: String) {
+    override fun showNetWorkErrorView(isLoadMore: Boolean, msg: String) {
         alert {
             setTitle("發生錯誤")
             setMessage(msg)
-            setPositiveButton("重試") { _, _ -> }
+            setPositiveButton("重試") { _, _ ->
+                if (isLoadMore) {
+                    presenter.onLoadNextPage()
+                } else {
+                    presenter.onQueryTextSubmit(searchView.query.toString())
+                }
+            }
             setNegativeButton("取消", null)
         }
     }
@@ -110,7 +107,8 @@ class MainActivity : AppCompatActivity(), SearchContract.View {
         recyclerView.post { adapter.noMorePages() }
     }
 
-    override fun showNoResultsView() {
-
+    override fun showNoResultsFoundView() {
+        errorView.visible()
+        recyclerView.gone()
     }
 }

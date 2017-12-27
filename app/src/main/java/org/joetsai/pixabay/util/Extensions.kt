@@ -20,3 +20,12 @@ inline fun Context.alert(func: AlertDialog.Builder.() -> AlertDialog.Builder) {
     AlertDialog.Builder(this).func().show()
 }
 
+
+
+fun View.visible() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.gone() {
+    this.visibility = View.GONE
+}
