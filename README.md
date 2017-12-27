@@ -22,6 +22,9 @@
 [Keddit — Part 4: RecyclerView — Delegate Adapters & Data Classes with Kotlin](https://android.jlelse.eu/keddit-part-4-recyclerview-delegate-adapters-data-classes-with-kotlin-9248f44327f7)
 
 
+[Kotlin 写 Android 单元测试（一），单元测试是什么以及为什么需要](http://johnnyshieh.me/posts/unit-test-what-and-why-in-kotlin/)
+
+
 
 
 ### 影像
