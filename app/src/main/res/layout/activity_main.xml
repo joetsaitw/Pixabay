@@ -56,8 +56,7 @@
             android:gravity="center"
             android:text="查無結果，請重新搜尋"
             android:textColor="#afafaf"
-            android:textSize="18sp"
-            tools:text="連線逾時，請檢察網路連線。\n輕觸即可重試" />
+            android:textSize="18sp" />
     </LinearLayout>
 
 

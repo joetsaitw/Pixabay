@@ -62,6 +62,9 @@ class MainPresenter(private val view: MainContract.View, private val model: Main
         }
     }
 
+    /**
+     * 使用[onQueryTextSubmit] 所搜尋的字串搜尋下一頁
+     */
     override fun onLoadNextPage() {
 
         view.enableProgressBar(true)
@@ -93,13 +96,5 @@ class MainPresenter(private val view: MainContract.View, private val model: Main
                 view.enableProgressBar(false)
             }
         })
-    }
-
-
-    /**
-     * 搜尋字串改變時，
-     */
-    override fun onQueryTextChange() {
-        page = INIT_PAGE
     }
 }

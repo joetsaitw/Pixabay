@@ -4,10 +4,6 @@ import org.joetsai.pixabay.common.Constants.ADAPTER_IMAGE
 import org.joetsai.pixabay.main.adapter.ViewType
 import java.io.Serializable
 
-/**
- * Created by Joe on 2017/12/9.
- */
-
 
 data class SearchImgResponse(
         val totalHits: Int, //500

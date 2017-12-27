@@ -114,6 +114,9 @@ class ImageAdapter(private val onLoadMoreListener: () -> Unit,
         notifyDataSetChanged()
     }
 
+    /**
+     * 已讀取完畢，不需要加載更多了
+     */
     fun noMorePages() {
         hasNextPage = false
     }
