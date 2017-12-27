@@ -9,13 +9,6 @@
 * [COLOR TOOL](https://material.io/color/#!/)
 * [MATERIAL ICONS](https://material.io/icons/)
 
-## 尚未完成功能
-
-[Dragging and Scaling](https://developer.android.com/training/gestures/scale.html): 圖片縮放功能
-
-
-[Spek](http://spekframework.org/): A Kotlin Specification Framework for the JVM
-
 
 ## 參考資料
 
@@ -46,6 +39,12 @@
 
 
 
+## 尚未完成功能
+
+[Dragging and Scaling](https://developer.android.com/training/gestures/scale.html): 圖片縮放功能
+
+
+[Spek](http://spekframework.org/): A Kotlin Specification Framework for the JVM
 
 
 
