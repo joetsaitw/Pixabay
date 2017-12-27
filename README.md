@@ -9,6 +9,10 @@
 * [COLOR TOOL](https://material.io/color/#!/)
 * [MATERIAL ICONS](https://material.io/icons/)
 
+## 尚未完成功能
+
+[Dragging and Scaling](https://developer.android.com/training/gestures/scale.html)
+
 ## 參考資料
 
 ### Kotlin
@@ -38,9 +42,6 @@
 
 
 
-## 尚未完成
-
-[Dragging and Scaling](https://developer.android.com/training/gestures/scale.html)
 
 
 
