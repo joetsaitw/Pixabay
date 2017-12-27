@@ -24,6 +24,9 @@
 
 [Kotlin 写 Android 单元测试（一），单元测试是什么以及为什么需要](http://johnnyshieh.me/posts/unit-test-what-and-why-in-kotlin/)
 
+[Befriending Kotlin and Mockito](https://medium.com/@elye.project/befriending-kotlin-and-mockito-1c2e7b0ef791)
+
+
 
 
 
