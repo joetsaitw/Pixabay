@@ -11,6 +11,8 @@
 * [Mockito-Kotlin](https://github.com/nhaarman/mockito-kotlin)
 * [COLOR TOOL](https://material.io/color/#!/)
 * [MATERIAL ICONS](https://material.io/icons/)
+* [EZGIF](https://ezgif.com/)
+
 
 
 ## 參考資料
