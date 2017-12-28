@@ -6,6 +6,7 @@
 * [Retrofit](http://square.github.io/retrofit/)
 * [JsonToKotlinClass](https://github.com/wuseal/JsonToKotlinClass/)
 * [Glide](https://github.com/bumptech/glide/)
+* [Mockito-Kotlin](https://github.com/nhaarman/mockito-kotlin)
 * [COLOR TOOL](https://material.io/color/#!/)
 * [MATERIAL ICONS](https://material.io/icons/)
 
@@ -51,6 +52,10 @@
 
 
 [Spek](http://spekframework.org/): A Kotlin Specification Framework for the JVM
+
+
+[Mockk](https://github.com/oleksiyp/mockk): Kotlin 的 Mockito lib
+
 
 
 
