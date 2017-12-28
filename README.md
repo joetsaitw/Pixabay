@@ -2,6 +2,8 @@
 練習使用 [Kotlin](https://kotlinlang.org/) 開發串接 [Pixabay API](https://pixabay.com/api/docs/)
 
 
+<img src="https://github.com/joetsaitw/Pixabay/blob/master/screenshot/demo_pixabay.gif" width="320">
+
 ## 工具 & 套件
 * [Retrofit](http://square.github.io/retrofit/)
 * [JsonToKotlinClass](https://github.com/wuseal/JsonToKotlinClass/)
