@@ -13,6 +13,9 @@ class MainModel : MainContract.Model {
         val apiService = ServiceGenerator.createService(PixabayApiService::class.java)
 
         val call = apiService.searchImages(query = query, page = page)
+
+        // 可以在這裡先處理 response
+        // 但我的做法是直接讓 presenter 處理 response callback
         call.enqueue(callback)
 
     }

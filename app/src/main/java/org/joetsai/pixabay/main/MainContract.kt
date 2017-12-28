@@ -10,19 +10,16 @@ interface MainContract {
     interface View {
         // List
         fun showList(hits: List<Image>)
-
         fun addList(hits: List<Image>)
         fun clearList()
 
         // Error View
         fun showErrorView(msg: String)
-
         fun showNetWorkErrorView(isLoadMore: Boolean, msg: String)
         fun showNoResultsFoundView()
 
         // Loading
         fun enableProgressBar(isEnabled: Boolean)
-
         fun stopLoadingMore()
     }
 

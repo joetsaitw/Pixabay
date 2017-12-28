@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         recyclerView.layoutManager = GridLayoutManager(this, GRID_SPAN_COUNT)
         recyclerView.adapter = adapter
 
-
         // Init SearchView
         searchView.maxWidth = Integer.MAX_VALUE
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

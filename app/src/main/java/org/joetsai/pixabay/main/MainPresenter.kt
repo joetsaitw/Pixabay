@@ -12,7 +12,8 @@ class MainPresenter(private val view: MainContract.View, private val model: Main
     }
 
     // 目前搜尋頁數，初始值 = 1
-    private var page: Int = INIT_PAGE
+    internal var page: Int = INIT_PAGE
+        private set
 
     // 要查詢的圖片
     private lateinit var query: String
