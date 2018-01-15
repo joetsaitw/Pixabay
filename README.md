@@ -2,7 +2,13 @@
 練習使用 [Kotlin](https://kotlinlang.org/) 開發串接 [Pixabay API](https://pixabay.com/api/docs/)
 
 
+
+
 <img src="https://github.com/joetsaitw/Pixabay/blob/master/screenshot/demo.gif" width="320">
+
+只運行在 API 23+ 的裝置上，點選這邊[下載 Pixabay APK](https://github.com/joetsaitw/Pixabay/releases/download/1.0/pixabay.apk)
+
+
 
 ## 工具 & 套件
 * [Retrofit](http://square.github.io/retrofit/)
